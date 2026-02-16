@@ -74,24 +74,30 @@
 
     <!-- Bottom toolbar -->
     <div class="toolbar" id="toolbar">
-      <!-- Color palette row -->
-      <div class="palette-row" id="palette-row">
-        <button class="color-swatch active" data-color="#FF6B6B" style="background:#FF6B6B" title="Red"></button>
-        <button class="color-swatch" data-color="#FF9F43" style="background:#FF9F43" title="Orange"></button>
-        <button class="color-swatch" data-color="#FECA57" style="background:#FECA57" title="Yellow"></button>
-        <button class="color-swatch" data-color="#48DBFB" style="background:#48DBFB" title="Light Blue"></button>
-        <button class="color-swatch" data-color="#0ABDE3" style="background:#0ABDE3" title="Blue"></button>
-        <button class="color-swatch" data-color="#55E6C1" style="background:#55E6C1" title="Mint"></button>
-        <button class="color-swatch" data-color="#26DE81" style="background:#26DE81" title="Green"></button>
-        <button class="color-swatch" data-color="#C56CF0" style="background:#C56CF0" title="Purple"></button>
-        <button class="color-swatch" data-color="#FF9FF3" style="background:#FF9FF3" title="Pink"></button>
-        <button class="color-swatch" data-color="#A0522D" style="background:#A0522D" title="Brown"></button>
+      <!-- Color palette grid (2 rows of 8) -->
+      <div class="palette-grid" id="palette-row">
+        <!-- Row 1: 8 colors -->
+        <button class="color-swatch active" data-color="#FF0000" style="background:#FF0000" title="Red"></button>
+        <button class="color-swatch" data-color="#800000" style="background:#800000" title="Maroon"></button>
+        <button class="color-swatch" data-color="#FFFF00" style="background:#FFFF00" title="Yellow"></button>
+        <button class="color-swatch" data-color="#808000" style="background:#808000" title="Olive"></button>
+        <button class="color-swatch" data-color="#00FF00" style="background:#00FF00" title="Lime"></button>
+        <button class="color-swatch" data-color="#008000" style="background:#008000" title="Green"></button>
+        <button class="color-swatch" data-color="#00FFFF" style="background:#00FFFF" title="Aqua"></button>
+        <button class="color-swatch" data-color="#008080" style="background:#008080" title="Teal"></button>
+        <!-- Row 2: 7 colors + custom picker -->
+        <button class="color-swatch" data-color="#0000FF" style="background:#0000FF" title="Blue"></button>
+        <button class="color-swatch" data-color="#000080" style="background:#000080" title="Navy"></button>
+        <button class="color-swatch" data-color="#FF00FF" style="background:#FF00FF" title="Fuchsia"></button>
+        <button class="color-swatch" data-color="#800080" style="background:#800080" title="Purple"></button>
         <button class="color-swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="White"></button>
-        <label class="color-swatch custom-color-swatch" title="Pick color">
-          <span>+</span>
-          <input type="color" id="custom-color" value="#FF6B6B" hidden>
-        </label>
+        <button class="color-swatch" data-color="#C0C0C0" style="background:#C0C0C0" title="Silver"></button>
+        <button class="color-swatch" data-color="#808080" style="background:#808080" title="Gray"></button>
+        <button class="color-swatch custom-color-swatch" id="custom-color-btn" title="Pick color">
+          <span class="plus-icon">+</span>
+        </button>
       </div>
+      <input type="color" id="custom-color" value="#FF6B6B" class="hidden-color-input">
 
       <!-- Action buttons row -->
       <div class="action-row">

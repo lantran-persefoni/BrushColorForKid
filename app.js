@@ -444,26 +444,33 @@
   paletteRow.addEventListener('click', function (e) {
     const swatch = e.target.closest('.color-swatch');
     if (!swatch) return;
-    if (swatch.classList.contains('custom-color-swatch')) return; // handled by input
+    if (swatch.classList.contains('custom-color-swatch')) return; // handled below
     if (swatch.dataset.color) {
       selectColor(swatch.dataset.color);
     }
   });
 
-  // Custom color picker
+  // Custom color picker — button opens the native color input
+  var customColorBtn = document.getElementById('custom-color-btn');
+
+  customColorBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    customColorInput.click();
+  });
+
   customColorInput.addEventListener('input', function () {
-    const hex = customColorInput.value;
-    selectColor(hex);
-    // Remove active from all preset swatches
+    var hex = customColorInput.value;
+    currentColor = hex;
+    isEraser = false;
+    btnEraser.classList.remove('active');
+    // Update custom button background to show chosen color
+    customColorBtn.style.background = hex;
+    // Mark custom as active, deactivate others
     paletteRow.querySelectorAll('.color-swatch').forEach(function (sw) {
       sw.classList.remove('active');
     });
-    customColorInput.closest('.custom-color-swatch').classList.add('active');
-  });
-
-  // Make custom color label open the picker on tap
-  customColorInput.closest('.custom-color-swatch').addEventListener('click', function () {
-    customColorInput.click();
+    customColorBtn.classList.add('active');
   });
 
   // Eraser toggle
