@@ -1,0 +1,452 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  background: #FFF8E7;
+  color: #333;
+  touch-action: manipulation;
+}
+
+body {
+  /* Safe area insets for notched iPhones */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ===== Desktop Blocker ===== */
+#desktop-blocker {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #FF6B6B, #C56CF0, #48DBFB);
+  justify-content: center;
+  align-items: center;
+}
+
+.blocker-content {
+  text-align: center;
+  color: white;
+  padding: 40px;
+  max-width: 500px;
+}
+
+.blocker-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.blocker-content h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.blocker-content p {
+  font-size: 20px;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+
+.blocker-hint {
+  margin-top: 24px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Show blocker on non-touch / wide screens */
+@media (hover: hover) and (pointer: fine) {
+  #desktop-blocker {
+    display: flex;
+  }
+  .screen {
+    display: none !important;
+  }
+}
+
+/* ===== Screens ===== */
+.screen {
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Screen A: Image Selection ===== */
+#screen-select {
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  gap: 32px;
+  overflow-y: auto;
+}
+
+.select-header {
+  text-align: center;
+}
+
+.app-logo {
+  font-size: 64px;
+  margin-bottom: 8px;
+}
+
+.select-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #FF6B6B;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.select-options {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Sample grid */
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.sample-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border: 3px solid #EEE;
+  border-radius: 16px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.sample-btn:active {
+  transform: scale(0.95);
+  border-color: #FF6B6B;
+}
+
+.sample-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+/* Upload button */
+.upload-section {
+  display: flex;
+  justify-content: center;
+}
+
+.upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #FF6B6B, #C56CF0);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.upload-btn:active {
+  transform: scale(0.95);
+}
+
+.upload-icon {
+  font-size: 22px;
+}
+
+/* ===== Screen B: Coloring Canvas ===== */
+#screen-canvas {
+  background: #f0f0f0;
+}
+
+#screen-canvas.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-container {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  touch-action: none;
+}
+
+#coloring-canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+/* ===== Working indicator ===== */
+.working-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  background: rgba(0,0,0,0.5);
+  border-radius: 16px;
+  padding: 20px;
+  pointer-events: none;
+}
+
+.working-indicator.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== Bottom Toolbar ===== */
+.toolbar {
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* Palette row */
+.palette-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.palette-row::-webkit-scrollbar {
+  display: none;
+}
+
+.color-swatch {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.15s;
+  padding: 0;
+  outline: none;
+}
+
+.color-swatch:active {
+  transform: scale(0.9);
+}
+
+.color-swatch.active {
+  border-color: #333;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+/* White swatch needs visible border */
+.color-swatch[data-color="#FFFFFF"] {
+  border-color: #ccc;
+}
+
+.color-swatch[data-color="#FFFFFF"].active {
+  border-color: #333;
+}
+
+/* Custom color picker swatch */
+.custom-color-swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  border-color: #ddd;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+/* Action buttons row */
+.action-row {
+  display: flex;
+  justify-content: space-around;
+  gap: 4px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  min-width: 56px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.action-btn:active {
+  transform: scale(0.92);
+  background: #f0f0f0;
+}
+
+.action-btn.active {
+  background: #FFE8E8;
+  border-color: #FF6B6B;
+}
+
+.action-icon {
+  font-size: 22px;
+}
+
+.action-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* ===== Modals ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+#save-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  margin-bottom: 16px;
+  background: white;
+}
+
+.modal-close-btn {
+  padding: 12px 40px;
+  background: #FF6B6B;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-close-btn:active {
+  transform: scale(0.95);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-btn.cancel {
+  background: #eee;
+  color: #666;
+}
+
+.modal-btn.confirm {
+  background: #FF6B6B;
+  color: white;
+}
+
+.modal-btn:active {
+  transform: scale(0.95);
+}

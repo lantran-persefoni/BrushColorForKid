@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BrushColor">
+  <meta name="theme-color" content="#FF6B6B">
+  <title>Brush Color for Kids</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Desktop blocker -->
+  <div id="desktop-blocker">
+    <div class="blocker-content">
+      <div class="blocker-icon">🎨</div>
+      <h1>Brush Color for Kids</h1>
+      <p>This coloring app is made for iPhone.</p>
+      <p>Please open it on your phone!</p>
+      <div class="blocker-hint">
+        Scan this page's QR code or send the link to your phone.
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen A: Image Selection -->
+  <div id="screen-select" class="screen active">
+    <div class="select-header">
+      <div class="app-logo">🎨</div>
+      <h1>Brush Color</h1>
+      <p class="subtitle">Choose a coloring page!</p>
+    </div>
+
+    <div class="select-options">
+      <div class="sample-grid">
+        <button class="sample-btn" data-sample="assets/sample-lion.png">
+          <img src="assets/sample-lion.png" alt="Lion" class="sample-thumb">
+          <span>Lion</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/sample-butterfly.png">
+          <img src="assets/sample-butterfly.png" alt="Butterfly" class="sample-thumb">
+          <span>Butterfly</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/sample-house.png">
+          <img src="assets/sample-house.png" alt="House" class="sample-thumb">
+          <span>House</span>
+        </button>
+      </div>
+
+      <div class="upload-section">
+        <label class="upload-btn" for="file-input">
+          <span class="upload-icon">📁</span>
+          <span>Upload Your Own</span>
+        </label>
+        <input type="file" id="file-input" accept="image/*" hidden>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen B: Coloring Canvas -->
+  <div id="screen-canvas" class="screen">
+    <div class="canvas-container" id="canvas-container">
+      <canvas id="coloring-canvas"></canvas>
+    </div>
+
+    <!-- Working indicator -->
+    <div id="working-indicator" class="working-indicator hidden">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Bottom toolbar -->
+    <div class="toolbar" id="toolbar">
+      <!-- Color palette row -->
+      <div class="palette-row" id="palette-row">
+        <button class="color-swatch active" data-color="#FF6B6B" style="background:#FF6B6B" title="Red"></button>
+        <button class="color-swatch" data-color="#FF9F43" style="background:#FF9F43" title="Orange"></button>
+        <button class="color-swatch" data-color="#FECA57" style="background:#FECA57" title="Yellow"></button>
+        <button class="color-swatch" data-color="#48DBFB" style="background:#48DBFB" title="Light Blue"></button>
+        <button class="color-swatch" data-color="#0ABDE3" style="background:#0ABDE3" title="Blue"></button>
+        <button class="color-swatch" data-color="#55E6C1" style="background:#55E6C1" title="Mint"></button>
+        <button class="color-swatch" data-color="#26DE81" style="background:#26DE81" title="Green"></button>
+        <button class="color-swatch" data-color="#C56CF0" style="background:#C56CF0" title="Purple"></button>
+        <button class="color-swatch" data-color="#FF9FF3" style="background:#FF9FF3" title="Pink"></button>
+        <button class="color-swatch" data-color="#A0522D" style="background:#A0522D" title="Brown"></button>
+        <button class="color-swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="White"></button>
+        <label class="color-swatch custom-color-swatch" title="Pick color">
+          <span>+</span>
+          <input type="color" id="custom-color" value="#FF6B6B" hidden>
+        </label>
+      </div>
+
+      <!-- Action buttons row -->
+      <div class="action-row">
+        <button class="action-btn" id="btn-eraser" title="Eraser">
+          <span class="action-icon">🧹</span>
+          <span class="action-label">Eraser</span>
+        </button>
+        <button class="action-btn" id="btn-undo" title="Undo">
+          <span class="action-icon">↩️</span>
+          <span class="action-label">Undo</span>
+        </button>
+        <button class="action-btn" id="btn-save" title="Save">
+          <span class="action-icon">💾</span>
+          <span class="action-label">Save</span>
+        </button>
+        <button class="action-btn" id="btn-reset" title="Reset">
+          <span class="action-icon">🗑️</span>
+          <span class="action-label">Reset</span>
+        </button>
+        <button class="action-btn" id="btn-close" title="Close">
+          <span class="action-icon">✖️</span>
+          <span class="action-label">Close</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Save modal (iOS guidance) -->
+    <div id="save-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Save Your Art!</h2>
+        <p>Tap and hold the image below, then choose <strong>"Save to Photos"</strong></p>
+        <img id="save-preview" alt="Your colored artwork">
+        <button class="modal-close-btn" id="save-modal-close">Done</button>
+      </div>
+    </div>
+
+    <!-- Reset confirm modal -->
+    <div id="reset-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Start Over?</h2>
+        <p>This will remove all your colors.</p>
+        <div class="modal-actions">
+          <button class="modal-btn cancel" id="reset-cancel">Keep Coloring</button>
+          <button class="modal-btn confirm" id="reset-confirm">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
