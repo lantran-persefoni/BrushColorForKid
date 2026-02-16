@@ -55,8 +55,12 @@
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = function () {
-      setupCanvas(img);
+      // Show the canvas screen FIRST so the container has real dimensions
       showScreen(screenCanvas);
+      // Use rAF to ensure layout has been computed after screen switch
+      requestAnimationFrame(function () {
+        setupCanvas(img);
+      });
     };
     img.onerror = function () {
       alert('Could not load image. Please try another.');
@@ -90,28 +94,36 @@
     const dpr = window.devicePixelRatio || 1;
     canvas.width = w * dpr;
     canvas.height = h * dpr;
+
+    // Set initial CSS size to the logical size
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
+
+    // Apply DPR transform so drawing commands use logical coordinates
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Fit canvas in container
-    fitCanvasInContainer();
-
-    // Draw image
+    // Draw image onto canvas
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, w, h);
     ctx.drawImage(img, 0, 0, w, h);
 
-    // Store original state
+    // Store original state (full-resolution pixel data)
     originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     undoStack = [];
+
+    // Now fit the canvas CSS size to the visible container
+    fitCanvasInContainer();
   }
 
   function fitCanvasInContainer() {
     const containerW = canvasContainer.clientWidth;
     const containerH = canvasContainer.clientHeight;
+
+    // Guard: if container isn't visible yet, skip (resize handler will fix later)
+    if (containerW === 0 || containerH === 0 || imageWidth === 0 || imageHeight === 0) return;
+
     const scaleX = containerW / imageWidth;
     const scaleY = containerH / imageHeight;
     const scale = Math.min(scaleX, scaleY);
