@@ -19,13 +19,13 @@
   const workingIndicator = document.getElementById('working-indicator');
 
   // Toolbar
-  const paletteRow = document.getElementById('palette-row');
+  const moreColorsBtn = document.getElementById('more-colors-btn');
+  const colorIndicator = document.getElementById('color-indicator');
   const btnEraser = document.getElementById('btn-eraser');
   const btnUndo = document.getElementById('btn-undo');
   const btnSave = document.getElementById('btn-save');
   const btnReset = document.getElementById('btn-reset');
   const btnClose = document.getElementById('btn-close');
-  const customColorInput = document.getElementById('custom-color');
 
   // Modals
   const saveModal = document.getElementById('save-modal');
@@ -34,9 +34,11 @@
   const resetModal = document.getElementById('reset-modal');
   const resetCancel = document.getElementById('reset-cancel');
   const resetConfirm = document.getElementById('reset-confirm');
+  const colorPickerModal = document.getElementById('color-picker-modal');
+  const colorPickerClose = document.getElementById('color-picker-close');
 
   // ---- State ----
-  let currentColor = '#FF6B6B';
+  let currentColor = '#FF0000';
   let isEraser = false;
   let originalImageData = null;   // untouched copy for reset
   let undoStack = [];
@@ -132,16 +134,14 @@
     canvas.style.height = Math.round(imageHeight * scale) + 'px';
   }
 
-  // ---- Color palette ----
+  // ---- Color selection ----
   function selectColor(hex) {
     currentColor = hex;
     isEraser = false;
     btnEraser.classList.remove('active');
 
-    // Update active swatch
-    paletteRow.querySelectorAll('.color-swatch').forEach(function (sw) {
-      sw.classList.toggle('active', sw.dataset.color === hex);
-    });
+    // Update color indicator
+    colorIndicator.style.background = hex;
   }
 
   // ---- Flood fill (iterative scanline) ----
@@ -440,50 +440,34 @@
     e.preventDefault();
   }, { passive: false });
 
-  // Color palette clicks
-  paletteRow.addEventListener('click', function (e) {
-    const swatch = e.target.closest('.color-swatch');
-    if (!swatch) return;
-    if (swatch.classList.contains('custom-color-swatch')) return; // handled below
-    if (swatch.dataset.color) {
-      selectColor(swatch.dataset.color);
+  // Color picker button — opens modal
+  moreColorsBtn.addEventListener('click', function () {
+    colorPickerModal.classList.remove('hidden');
+  });
+
+  // Color picker modal — color selection
+  colorPickerModal.addEventListener('click', function (e) {
+    const pickerSwatch = e.target.closest('.picker-swatch');
+    if (pickerSwatch && pickerSwatch.dataset.color) {
+      const hex = pickerSwatch.dataset.color;
+      selectColor(hex);
+      // Close modal
+      colorPickerModal.classList.add('hidden');
     }
   });
 
-  // Custom color picker — button opens the native color input
-  var customColorBtn = document.getElementById('custom-color-btn');
-
-  customColorBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    customColorInput.click();
+  // Color picker modal close
+  colorPickerClose.addEventListener('click', function () {
+    colorPickerModal.classList.add('hidden');
   });
-
-  customColorInput.addEventListener('input', function () {
-    var hex = customColorInput.value;
-    currentColor = hex;
-    isEraser = false;
-    btnEraser.classList.remove('active');
-    // Update custom button background to show chosen color
-    customColorBtn.style.background = hex;
-    // Mark custom as active, deactivate others
-    paletteRow.querySelectorAll('.color-swatch').forEach(function (sw) {
-      sw.classList.remove('active');
-    });
-    customColorBtn.classList.add('active');
+  colorPickerModal.addEventListener('click', function (e) {
+    if (e.target === colorPickerModal) colorPickerModal.classList.add('hidden');
   });
 
   // Eraser toggle
   btnEraser.addEventListener('click', function () {
     isEraser = !isEraser;
     btnEraser.classList.toggle('active', isEraser);
-    if (isEraser) {
-      paletteRow.querySelectorAll('.color-swatch').forEach(function (sw) {
-        sw.classList.remove('active');
-      });
-    } else {
-      selectColor(currentColor);
-    }
   });
 
   // Undo

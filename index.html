@@ -37,17 +37,61 @@
 
     <div class="select-options">
       <div class="sample-grid">
-        <button class="sample-btn" data-sample="assets/sample-lion.png">
-          <img src="assets/sample-lion.png" alt="Lion" class="sample-thumb">
-          <span>Lion</span>
+        <button class="sample-btn" data-sample="assets/GOAT.png">
+          <img src="assets/GOAT.png" alt="Goat" class="sample-thumb">
+          <span>Goat</span>
         </button>
-        <button class="sample-btn" data-sample="assets/sample-butterfly.png">
-          <img src="assets/sample-butterfly.png" alt="Butterfly" class="sample-thumb">
+        <button class="sample-btn" data-sample="assets/casau.jpg">
+          <img src="assets/casau.jpg" alt="Castle" class="sample-thumb">
+          <span>Castle</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/seaanimals.jpg">
+          <img src="assets/seaanimals.jpg" alt="Sea Animals" class="sample-thumb">
+          <span>Sea Animals</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/policecar.jpg">
+          <img src="assets/policecar.jpg" alt="Police Car" class="sample-thumb">
+          <span>Police Car</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/firetruck.jpg">
+          <img src="assets/firetruck.jpg" alt="Fire Truck" class="sample-thumb">
+          <span>Fire Truck</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/excavador.jpg">
+          <img src="assets/excavador.jpg" alt="Excavator" class="sample-thumb">
+          <span>Excavator</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/butterfly.jpg">
+          <img src="assets/butterfly.jpg" alt="Butterfly" class="sample-thumb">
           <span>Butterfly</span>
         </button>
-        <button class="sample-btn" data-sample="assets/sample-house.png">
-          <img src="assets/sample-house.png" alt="House" class="sample-thumb">
-          <span>House</span>
+        <button class="sample-btn" data-sample="assets/dinasor.jpg">
+          <img src="assets/dinasor.jpg" alt="Dinosaur" class="sample-thumb">
+          <span>Dinosaur</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/0ctopus.jpg">
+          <img src="assets/0ctopus.jpg" alt="Octopus" class="sample-thumb">
+          <span>Octopus</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/crab.jpg">
+          <img src="assets/crab.jpg" alt="Crab" class="sample-thumb">
+          <span>Crab</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/orca.jpg">
+          <img src="assets/orca.jpg" alt="Orca" class="sample-thumb">
+          <span>Orca</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/elephant.jpg">
+          <img src="assets/elephant.jpg" alt="Elephant" class="sample-thumb">
+          <span>Elephant</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/lion.jpg">
+          <img src="assets/lion.jpg" alt="Lion" class="sample-thumb">
+          <span>Lion</span>
+        </button>
+        <button class="sample-btn" data-sample="assets/turtle.jpg">
+          <img src="assets/turtle.jpg" alt="Turtle" class="sample-thumb">
+          <span>Turtle</span>
         </button>
       </div>
 
@@ -74,30 +118,13 @@
 
     <!-- Bottom toolbar -->
     <div class="toolbar" id="toolbar">
-      <!-- Color palette grid (2 rows of 8) -->
-      <div class="palette-grid" id="palette-row">
-        <!-- Row 1: 8 colors -->
-        <button class="color-swatch active" data-color="#FF0000" style="background:#FF0000" title="Red"></button>
-        <button class="color-swatch" data-color="#800000" style="background:#800000" title="Maroon"></button>
-        <button class="color-swatch" data-color="#FFFF00" style="background:#FFFF00" title="Yellow"></button>
-        <button class="color-swatch" data-color="#808000" style="background:#808000" title="Olive"></button>
-        <button class="color-swatch" data-color="#00FF00" style="background:#00FF00" title="Lime"></button>
-        <button class="color-swatch" data-color="#008000" style="background:#008000" title="Green"></button>
-        <button class="color-swatch" data-color="#00FFFF" style="background:#00FFFF" title="Aqua"></button>
-        <button class="color-swatch" data-color="#008080" style="background:#008080" title="Teal"></button>
-        <!-- Row 2: 7 colors + custom picker -->
-        <button class="color-swatch" data-color="#0000FF" style="background:#0000FF" title="Blue"></button>
-        <button class="color-swatch" data-color="#000080" style="background:#000080" title="Navy"></button>
-        <button class="color-swatch" data-color="#FF00FF" style="background:#FF00FF" title="Fuchsia"></button>
-        <button class="color-swatch" data-color="#800080" style="background:#800080" title="Purple"></button>
-        <button class="color-swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="White"></button>
-        <button class="color-swatch" data-color="#C0C0C0" style="background:#C0C0C0" title="Silver"></button>
-        <button class="color-swatch" data-color="#808080" style="background:#808080" title="Gray"></button>
-        <button class="color-swatch custom-color-swatch" id="custom-color-btn" title="Pick color">
-          <span class="plus-icon">+</span>
+      <!-- Single color picker button -->
+      <div class="color-picker-row">
+        <button class="single-color-btn" id="more-colors-btn" title="Choose color">
+          <div class="color-indicator" id="color-indicator"></div>
+          <span class="color-label">Color</span>
         </button>
       </div>
-      <input type="color" id="custom-color" value="#FF6B6B" class="hidden-color-input">
 
       <!-- Action buttons row -->
       <div class="action-row">
@@ -143,6 +170,48 @@
           <button class="modal-btn cancel" id="reset-cancel">Keep Coloring</button>
           <button class="modal-btn confirm" id="reset-confirm">Reset</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Color picker modal -->
+    <div id="color-picker-modal" class="modal hidden">
+      <div class="color-picker-content">
+        <h2>Choose Color</h2>
+        <div class="color-picker-grid">
+          <!-- Basic 15 colors (no black) -->
+          <button class="picker-swatch" data-color="#FF0000" style="background:#FF0000" title="Red"></button>
+          <button class="picker-swatch" data-color="#800000" style="background:#800000" title="Maroon"></button>
+          <button class="picker-swatch" data-color="#FFFF00" style="background:#FFFF00" title="Yellow"></button>
+          <button class="picker-swatch" data-color="#808000" style="background:#808000" title="Olive"></button>
+          <button class="picker-swatch" data-color="#00FF00" style="background:#00FF00" title="Lime"></button>
+          <button class="picker-swatch" data-color="#008000" style="background:#008000" title="Green"></button>
+          <button class="picker-swatch" data-color="#00FFFF" style="background:#00FFFF" title="Aqua"></button>
+          <button class="picker-swatch" data-color="#008080" style="background:#008080" title="Teal"></button>
+          <button class="picker-swatch" data-color="#0000FF" style="background:#0000FF" title="Blue"></button>
+          <button class="picker-swatch" data-color="#000080" style="background:#000080" title="Navy"></button>
+          <button class="picker-swatch" data-color="#FF00FF" style="background:#FF00FF" title="Fuchsia"></button>
+          <button class="picker-swatch" data-color="#800080" style="background:#800080" title="Purple"></button>
+          <button class="picker-swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="White"></button>
+          <button class="picker-swatch" data-color="#C0C0C0" style="background:#C0C0C0" title="Silver"></button>
+          <button class="picker-swatch" data-color="#808080" style="background:#808080" title="Gray"></button>
+          <!-- Additional colors -->
+          <button class="picker-swatch" data-color="#FFB3BA" style="background:#FFB3BA" title="Light Pink"></button>
+          <button class="picker-swatch" data-color="#FFDFBA" style="background:#FFDFBA" title="Peach"></button>
+          <button class="picker-swatch" data-color="#FFFFBA" style="background:#FFFFBA" title="Light Yellow"></button>
+          <button class="picker-swatch" data-color="#BAFFC9" style="background:#BAFFC9" title="Mint"></button>
+          <button class="picker-swatch" data-color="#BAE1FF" style="background:#BAE1FF" title="Light Blue"></button>
+          <button class="picker-swatch" data-color="#FF6B9D" style="background:#FF6B9D" title="Hot Pink"></button>
+          <button class="picker-swatch" data-color="#FFA500" style="background:#FFA500" title="Orange"></button>
+          <button class="picker-swatch" data-color="#FFD700" style="background:#FFD700" title="Gold"></button>
+          <button class="picker-swatch" data-color="#32CD32" style="background:#32CD32" title="Lime Green"></button>
+          <button class="picker-swatch" data-color="#1E90FF" style="background:#1E90FF" title="Dodger Blue"></button>
+          <button class="picker-swatch" data-color="#8B4513" style="background:#8B4513" title="Brown"></button>
+          <button class="picker-swatch" data-color="#DC143C" style="background:#DC143C" title="Crimson"></button>
+          <button class="picker-swatch" data-color="#FF1493" style="background:#FF1493" title="Deep Pink"></button>
+          <button class="picker-swatch" data-color="#4B0082" style="background:#4B0082" title="Indigo"></button>
+          <button class="picker-swatch" data-color="#000000" style="background:#000000" title="Black"></button>
+        </div>
+        <button class="glass-btn" id="color-picker-close">Done</button>
       </div>
     </div>
   </div>

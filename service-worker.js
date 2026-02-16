@@ -1,6 +1,6 @@
 // ===== Service Worker for Brush Color for Kids =====
 
-const CACHE_NAME = 'brushcolor-v1';
+const CACHE_NAME = 'brushcolor-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -10,9 +10,20 @@ const ASSETS = [
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
   './icons/apple-touch-icon.png',
-  './assets/sample-lion.png',
-  './assets/sample-butterfly.png',
-  './assets/sample-house.png',
+  './assets/GOAT.png',
+  './assets/casau.jpg',
+  './assets/seaanimals.jpg',
+  './assets/policecar.jpg',
+  './assets/firetruck.jpg',
+  './assets/excavador.jpg',
+  './assets/butterfly.jpg',
+  './assets/dinasor.jpg',
+  './assets/0ctopus.jpg',
+  './assets/crab.jpg',
+  './assets/orca.jpg',
+  './assets/elephant.jpg',
+  './assets/lion.jpg',
+  './assets/turtle.jpg',
 ];
 
 // Install: cache all static assets
